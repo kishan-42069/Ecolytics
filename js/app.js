@@ -15,6 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // ── DOM References ────────────────────────────────────────
   const $ = id => document.getElementById(id);
   const $$ = sel => document.querySelectorAll(sel);
+  const escapeHtml = text => {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+  };
 
   const DOM = {
     navItems: $$(".nav-item, .mobile-nav-item"),
@@ -402,7 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const actions = Storage.getCustomActions();
     DOM.customActionsList.innerHTML = actions.map(a => `
       <div class="tag tag-teal" style="display:flex; justify-content:space-between; align-items:center; padding: 6px 12px; border-radius: 6px;">
-        <span>${a.text}</span>
+        <span>${escapeHtml(a.text)}</span>
         <button onclick="removeCustomActionFromUI(${a.id})" style="background:none; border:none; cursor:pointer; color:var(--text-teal); display:flex; padding:2px; opacity:0.7;">
           <svg style="width:14px;height:14px;" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -571,7 +576,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function handleCoachSubmit() {
     const query = DOM.coachInput.value.trim();
     if (!query) return;
-    appendMsg("user", `<p>${query}</p>`);
+    const escapedQuery = escapeHtml(query);
+    appendMsg("user", `<p>${escapedQuery}</p>`);
     DOM.coachInput.value = "";
 
     const typingEl = document.createElement("div");
@@ -583,7 +589,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const results = Calculator.calculate(State.logs, State.selectedRegion);
     setTimeout(() => {
       typingEl.remove();
-      appendMsg("coach", Coach.respond(query, results));
+      appendMsg("coach", Coach.respond(escapedQuery, results));
     }, 1100);
   }
 
@@ -720,6 +726,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModal = () => { DOM.settingsModal.style.display = "none"; };
 
     DOM.openSettingsBtn && DOM.openSettingsBtn.addEventListener("click", openModal);
+    DOM.openSettingsBtn && DOM.openSettingsBtn.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openModal();
+      }
+    });
     DOM.openSettingsBtn2 && DOM.openSettingsBtn2.addEventListener("click", openModal);
     DOM.closeSettingsBtn && DOM.closeSettingsBtn.addEventListener("click", closeModal);
     DOM.settingsModal && DOM.settingsModal.addEventListener("click", e => { if (e.target === DOM.settingsModal) closeModal(); });

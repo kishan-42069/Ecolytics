@@ -1,0 +1,13 @@
+{
+  "name": "prompt-wars",
+  "version": "1.0.0",
+  "description": "Ecolytics — Carbon Footprint Tracker",
+  "main": "js/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  }
+}
