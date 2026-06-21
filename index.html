@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ecolytics — Know your carbon footprint, reduce your environmental impact, and take real climate action. 100% free, private, and science-backed.">
+  <meta name="keywords" content="carbon footprint, CO2 tracker, climate calculator, eco tracker, carbon calculator, reduce emissions, sustainability">
+  <meta name="theme-color" content="#f8fafc">
+  <meta property="og:title" content="Ecolytics — Carbon Footprint Tracker">
+  <meta property="og:description" content="Track your CO₂ footprint, simulate lifestyle changes, and shrink your environmental impact. Free, private, no account needed.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <title>Ecolytics — Carbon Footprint Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23f8fafc'/><path d='M65 28C38 34 32 55 27 65a3 3 0 002.7 4.3h36a3 3 0 002.8-3.8C66 62 62 54 62 42c0 0 6-3 6-12' stroke='%23047857' stroke-width='6' fill='none' stroke-linecap='round'/><path d='M36 22c12 0 24 6 24 6' stroke='%23047857' stroke-width='6' fill='none' stroke-linecap='round'/></svg>" type="image/svg+xml">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/coach.css">
+  <link rel="stylesheet" href="css/simulator.css">
+</head>
+<body>
+<div class="app-container">
+
+  <!-- ── Sidebar ──────────────────────────────────────────── -->
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/><path d="M8 12s1-4 4-4 4 4 4 4-1 4-4 4-4-4-4-4z" stroke-linecap="round"/></svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Ecolytics</span>
+        <span class="brand-tagline">Your Planet Companion</span>
+      </div>
+    </div>
+
+    <span class="nav-section-label">My Summary</span>
+    <ul class="nav-menu">
+      <li class="nav-item active" data-target="dashboard">
+        <button id="nav-btn-dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Home
+        </button>
+      </li>
+      <li class="nav-item" data-target="logger">
+        <button id="nav-btn-logger">
+          <svg viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><path d="M17.5 3.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 8.5-8.5z"/></svg>
+          My Activities
+        </button>
+      </li>
+    </ul>
+
+    <span class="nav-section-label">Explore</span>
+    <ul class="nav-menu">
+      <li class="nav-item" data-target="simulator">
+        <button id="nav-btn-simulator">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          What If?
+        </button>
+      </li>
+      <li class="nav-item" data-target="coach">
+        <button id="nav-btn-coach">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Ask Eco
+        </button>
+      </li>
+      <li class="nav-item" data-target="rewards">
+        <button id="nav-btn-rewards">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+          My Goals
+        </button>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-card" id="open-settings-btn" title="Privacy &amp; Settings">
+        <div class="user-avatar" id="user-avatar-box">HC</div>
+        <div class="user-info">
+          <span class="user-name">Planet Hero</span>
+          <span class="user-level" id="user-lvl-indicator">Level 1</span>
+        </div>
+      </div>
+      <button class="settings-link" id="open-settings-btn2">
+        <svg viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+        Privacy &amp; Settings
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Mobile Bottom Nav ─────────────────────────────────── -->
+  <div class="mobile-nav">
+    <button class="mobile-nav-item active" data-target="dashboard">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="mobile-nav-item" data-target="logger">
+      <svg viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><path d="M17.5 3.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 8.5-8.5z"/></svg>
+      <span>Activities</span>
+    </button>
+    <button class="mobile-nav-item" data-target="simulator">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>What If?</span>
+    </button>
+    <button class="mobile-nav-item" data-target="coach">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <span>Ask Eco</span>
+    </button>
+    <button class="mobile-nav-item" data-target="rewards">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      <span>My Goals</span>
+    </button>
+  </div>
+
+  <!-- ── Main Layout ───────────────────────────────────────── -->
+  <main class="main-layout">
+
+    <!-- Header -->
+    <header class="top-header">
+      <div class="header-left">
+        <h1 class="header-title" id="current-view-title">My Impact</h1>
+        <p class="header-subtitle" id="current-view-subtitle">See how your daily habits affect the planet</p>
+      </div>
+      <div class="header-actions">
+        <div class="header-pill pill-teal" id="streak-pill" title="Log daily activity to maintain your streak">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13.5 1.515a3 3 0 00-3 0L3 5.845a3 3 0 00-1.5 2.598v7.114A3 3 0 003 18.155l7.5 4.33a3 3 0 003 0l7.5-4.33a3 3 0 001.5-2.598V8.443a3 3 0 00-1.5-2.598l-7.5-4.33z" opacity="0.15"/><path d="M12 8v4l3 3" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round"/></svg>
+          <span id="streak-count-val">4</span> day streak
+        </div>
+        <div class="header-pill pill-blue" id="xp-pill">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span id="level-display-label">Level 1</span>
+          <div class="xp-track"><div class="xp-fill" id="xp-bar-fill" style="width:36%"></div></div>
+          <span id="xp-text-label">180 XP</span>
+        </div>
+        <select id="region-select" style="font-size:12px; padding: 7px 32px 7px 12px; height:36px; border-radius:8px; width:auto; box-shadow: var(--shadow-xs);" title="My Region">
+          <option value="IN">🇮🇳 India</option>
+          <option value="US">🇺🇸 USA</option>
+          <option value="GL">🌍 Global</option>
+        </select>
+        <button class="icon-btn menu-toggle" id="menu-toggle-btn" title="Toggle navigation">
+          <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content-frame">
+
+      <!-- ── 1. DASHBOARD ──────────────────────────────────── -->
+      <section class="view-section active" id="view-dashboard">
+
+        <!-- Top row: Score + Breakdown -->
+        <div class="dashboard-grid">
+          <div class="dash-col-left">
+
+            <!-- Carbon Score Card -->
+            <div class="score-card">
+              <div class="score-header">
+                <span class="score-label">My Monthly Impact</span>
+              </div>
+              <div class="score-dial">
+                <svg class="score-svg" viewBox="0 0 200 200">
+                  <defs>
+                    <linearGradient id="dialGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stop-color="#047857"/>
+                      <stop offset="100%" stop-color="#065f46"/>
+                    </linearGradient>
+                  </defs>
+                  <circle class="dial-track" cx="100" cy="100" r="85" transform="rotate(-90 100 100)"/>
+                  <circle class="dial-fill" id="score-dial-fill" cx="100" cy="100" r="85" transform="rotate(-90 100 100)" style="stroke: url(#dialGrad);"/>
+                </svg>
+                <div class="score-value-center" style="max-width: 140px; text-align: center;">
+                  <span class="score-number" id="dash-total-score">—</span>
+                  <span class="score-unit">kg / month</span>
+                </div>
+              </div>
+              <span class="score-grade" id="dash-climate-rating">Calculating...</span>
+              <div class="score-stats">
+                <div class="score-stat-item">
+                  <span class="score-stat-val" id="stat-vs-avg">—</span>
+                  <span class="score-stat-lbl">vs Average</span>
+                </div>
+                <div class="score-stat-item">
+                  <span class="score-stat-val" id="stat-vs-target">—</span>
+                  <span class="score-stat-lbl">vs Goal</span>
+                </div>
+                <div class="score-stat-item">
+                  <span class="score-stat-val" id="stat-top-cat" style="font-size: 14px;">—</span>
+                  <span class="score-stat-lbl">Top Category</span>
+                </div>
+              </div>
+              <button class="btn btn-primary" id="open-story-btn" style="width: 100%; margin-top: 16px; background: linear-gradient(135deg, #10b981 0%, #047857 100%); border: none;">
+                <svg viewBox="0 0 24 24" style="stroke: white;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                Share to Instagram Story
+              </button>
+            </div>
+
+            <!-- Quick Equivalents -->
+            <div class="card-flat">
+              <div class="card-header" style="margin-bottom: var(--space-4);">
+                <span class="card-title">
+                  <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                  What does that actually mean?
+                </span>
+              </div>
+              <div class="equiv-row">
+                <div class="equiv-card">
+                  <div class="equiv-icon">
+                    <svg viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3"/><rect x="9" y="11" width="14" height="10" rx="1"/><path d="M13 15h4m0 0h2m-2 0v-2m0 2v2"/></svg>
+                  </div>
+                  <div class="equiv-data">
+                    <span class="equiv-num" id="eq-car-miles">—</span>
+                    <span class="equiv-label">Miles by car</span>
+                  </div>
+                </div>
+                <div class="equiv-card">
+                  <div class="equiv-icon">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18" stroke-linecap="round" stroke-width="3"/></svg>
+                  </div>
+                  <div class="equiv-data">
+                    <span class="equiv-num" id="eq-phones">—</span>
+                    <span class="equiv-label">Phone charges</span>
+                  </div>
+                </div>
+                <div class="equiv-card">
+                  <div class="equiv-icon">
+                    <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.67a1 1 0 00.93 1.46h12.5a1 1 0 00.95-1.31C17.5 18.42 16 16 16 12c0 0 2-1 2-4"/><path d="M7 4c4 0 8 2 8 2"/></svg>
+                  </div>
+                  <div class="equiv-data">
+                    <span class="equiv-num" id="eq-tree-months">—</span>
+                    <span class="equiv-label">Trees needed (1 month)</span>
+                  </div>
+                </div>
+                <div class="equiv-card">
+                  <div class="equiv-icon">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 15.5A6.5 6.5 0 019 9V4h6v5a6.5 6.5 0 01-.5 2.5"/><path d="M9 4a3 3 0 00-3 3v6a9 9 0 009 9 9 9 0 009-9V7a3 3 0 00-3-3H9z"/></svg>
+                  </div>
+                  <div class="equiv-data">
+                    <span class="equiv-num" id="eq-gasoline">—</span>
+                    <span class="equiv-label">Litres of petrol saved</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-col-right">
+            <!-- Category Breakdown -->
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">
+                  <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                  Where My Carbon Comes From
+                </span>
+                <span class="tag tag-blue" id="region-badge-display">US (EPA)</span>
+              </div>
+              <div class="category-list" id="category-list-el"></div>
+            </div>
+
+            <!-- Benchmarks + Recs -->
+            <div class="grid-2" style="gap: var(--space-5);">
+              <!-- Benchmarks -->
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-linecap="round" stroke-width="3"/></svg>
+                    How Do I Compare?
+                  </span>
+                </div>
+                <div class="benchmark-list" id="benchmark-list-el"></div>
+              </div>
+
+              <!-- Recommendations -->
+              <div class="card">
+                <div class="card-header">
+                  <span class="card-title">
+                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Easy Wins for You
+                  </span>
+                </div>
+                <div class="rec-list" id="rec-list-el"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 2. ACTIVITY LOG ───────────────────────────────── -->
+      <section class="view-section" id="view-logger">
+        <div class="grid-2-1">
+          <!-- Left: Form -->
+          <!-- Left: Form -->
+          <div class="card-flat" style="padding: 0; border: none; background: transparent;">
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-5);">
+              <div>
+                <h2 style="font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px;">
+                  <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:var(--green);fill:none;stroke-width:2;"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5"/><path d="M17.5 3.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 8.5-8.5z"/></svg>
+                  Log My Month
+                </h2>
+                <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: 4px;">Update your monthly activities to see your true footprint.</p>
+              </div>
+              <button class="btn btn-secondary btn-sm" id="apply-defaults-btn">Autofill Defaults</button>
+            </div>
+
+            <form id="activity-logger-form" onsubmit="event.preventDefault();">
+              <div class="accordion" id="logger-accordion">
+                
+                <!-- 🚗 Transportation -->
+                <div class="accordion-item active" data-accordion="transport">
+                  <div class="accordion-header">
+                    <div class="accordion-title-wrap">
+                      <div class="accordion-icon">🚗</div>
+                      <span class="accordion-title">Getting Around</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="accordion-content">
+                    <div class="accordion-body">
+                      <div class="form-group">
+                        <label for="log-driving">Miles driven by car</label>
+                        <div class="slider-input-group">
+                          <input type="range" id="log-driving-slider" min="0" max="2000" value="0">
+                          <input type="number" id="log-driving" class="num-box" min="0" placeholder="e.g. 150">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="log-transit">Miles by bus or train</label>
+                        <div class="slider-input-group">
+                          <input type="range" id="log-transit-slider" min="0" max="1000" value="0">
+                          <input type="number" id="log-transit" class="num-box" min="0" placeholder="e.g. 40">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="log-flights">Miles flown</label>
+                        <div class="slider-input-group">
+                          <input type="range" id="log-flights-slider" min="0" max="10000" step="100" value="0">
+                          <input type="number" id="log-flights" class="num-box" min="0" placeholder="e.g. 0">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ⚡ Energy -->
+                <div class="accordion-item" data-accordion="energy">
+                  <div class="accordion-header">
+                    <div class="accordion-title-wrap">
+                      <div class="accordion-icon">⚡</div>
+                      <span class="accordion-title">Home Energy</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="accordion-content">
+                    <div class="accordion-body">
+                      <div class="form-group">
+                        <label for="log-electricity">Electricity used (kWh)</label>
+                        <div class="slider-input-group">
+                          <input type="range" id="log-electricity-slider" min="0" max="2000" value="0">
+                          <input type="number" id="log-electricity" class="num-box" min="0" placeholder="e.g. 250">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="log-green-energy">% of clean/green energy</label>
+                        <div class="slider-input-group">
+                          <input type="range" id="log-green-energy-slider" min="0" max="100" value="0">
+                          <input type="number" id="log-green-energy" class="num-box" min="0" max="100" placeholder="e.g. 20">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 🍽️ Food -->
+                <div class="accordion-item" data-accordion="food">
+                  <div class="accordion-header">
+                    <div class="accordion-title-wrap">
+                      <div class="accordion-icon">🍽️</div>
+                      <span class="accordion-title">Food & Diet</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="accordion-content">
+                    <div class="accordion-body">
+                      <div class="form-row">
+                        <div class="form-group" style="align-items: center; text-align: center;">
+                          <label for="log-meat-meals" style="margin-bottom: 8px;">Beef/Lamb Meals</label>
+                          <div class="stepper">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-meat-meals', -1)">-</button>
+                            <input type="number" id="log-meat-meals" class="stepper-input" min="0" value="0">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-meat-meals', 1)">+</button>
+                          </div>
+                        </div>
+                        <div class="form-group" style="align-items: center; text-align: center;">
+                          <label for="log-veg-meals" style="margin-bottom: 8px;">Vegetarian Meals</label>
+                          <div class="stepper">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-veg-meals', -1)">-</button>
+                            <input type="number" id="log-veg-meals" class="stepper-input" min="0" value="0">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-veg-meals', 1)">+</button>
+                          </div>
+                        </div>
+                        <div class="form-group" style="align-items: center; text-align: center;">
+                          <label for="log-vegan-meals" style="margin-bottom: 8px;">Vegan Meals</label>
+                          <div class="stepper">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-vegan-meals', -1)">-</button>
+                            <input type="number" id="log-vegan-meals" class="stepper-input" min="0" value="0">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-vegan-meals', 1)">+</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 🛍️ Shopping & Waste -->
+                <div class="accordion-item" data-accordion="shopping">
+                  <div class="accordion-header">
+                    <div class="accordion-title-wrap">
+                      <div class="accordion-icon">🛍️</div>
+                      <span class="accordion-title">Shopping & Waste</span>
+                    </div>
+                    <svg class="accordion-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                  <div class="accordion-content">
+                    <div class="accordion-body">
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label for="log-shopping">Shopping Spend ($)</label>
+                          <div class="slider-input-group">
+                            <input type="range" id="log-shopping-slider" min="0" max="2000" value="0">
+                            <input type="number" id="log-shopping" class="num-box" min="0" placeholder="e.g. 200">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="log-water">Water (gallons)</label>
+                          <div class="slider-input-group">
+                            <input type="range" id="log-water-slider" min="0" max="5000" value="0">
+                            <input type="number" id="log-water" class="num-box" min="0" placeholder="e.g. 1000">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group">
+                          <label for="log-waste">Rubbish (kg)</label>
+                          <div class="stepper" style="width: 100%; justify-content: space-between;">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-waste', -1)">-</button>
+                            <input type="number" id="log-waste" class="stepper-input" min="0" value="0">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-waste', 1)">+</button>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="log-recycled">Recycling (%)</label>
+                          <div class="stepper" style="width: 100%; justify-content: space-between;">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-recycled', -5)">-</button>
+                            <input type="number" id="log-recycled" class="stepper-input" min="0" max="100" value="0">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-recycled', 5)">+</button>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="log-composted">Compost (%)</label>
+                          <div class="stepper" style="width: 100%; justify-content: space-between;">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-composted', -5)">-</button>
+                            <input type="number" id="log-composted" class="stepper-input" min="0" max="100" value="0">
+                            <button type="button" class="stepper-btn" onclick="stepValue('log-composted', 5)">+</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <button class="btn btn-primary" id="save-logs-btn" style="width: 100%; padding: 14px; font-size: var(--text-md); margin-top: var(--space-2); box-shadow: var(--shadow-md);">
+                Save Progress & Update Stats
+              </button>
+            </form>
+          </div>
+
+          <!-- Right: Quick Actions + Integrations -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-5);">
+
+            <!-- Quick Actions -->
+            <div class="card">
+              <div class="card-header" style="margin-bottom: var(--space-4);">
+                <span class="card-title">
+                  <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                  I did a green thing today! ✅
+                </span>
+                <span class="tag tag-blue">+20 XP each</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+                <button class="quick-action-card" id="quick-action-transit">
+                  <div class="qa-icon" style="background: var(--bg-blue-wash); color: var(--blue);">🚌</div>
+                  <div class="qa-text">
+                    <span class="qa-title">Took public transit</span>
+                    <span class="qa-desc">-15 miles driven</span>
+                  </div>
+                  <div class="qa-add">+</div>
+                </button>
+                <button class="quick-action-card" id="quick-action-meal">
+                  <div class="qa-icon" style="background: var(--bg-green-wash); color: var(--green);">🌿</div>
+                  <div class="qa-text">
+                    <span class="qa-title">Plant-based meal</span>
+                    <span class="qa-desc">Replaces 1 meat meal</span>
+                  </div>
+                  <div class="qa-add">+</div>
+                </button>
+                <button class="quick-action-card" id="quick-action-compost">
+                  <div class="qa-icon" style="background: var(--bg-orange-wash, #ffedd5); color: var(--orange, #c2410c);">🌱</div>
+                  <div class="qa-text">
+                    <span class="qa-title">Composted scraps</span>
+                    <span class="qa-desc">+10% composted</span>
+                  </div>
+                  <div class="qa-add">+</div>
+                </button>
+              </div>
+
+              <!-- Custom action input -->
+              <div style="margin-top: var(--space-4);">
+                <div class="divider" style="margin: var(--space-4) 0 var(--space-3);"></div>
+                <p style="font-size: var(--text-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: var(--space-2);">Add your own</p>
+                <div style="display: flex; gap: var(--space-2);">
+                  <input type="text" id="custom-action-input" placeholder="e.g. Walked instead of drove 🚶" maxlength="80" style="flex:1; font-size: var(--text-xs);">
+                  <button class="btn btn-primary btn-sm" id="custom-action-add-btn" style="white-space:nowrap; flex-shrink:0;">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add
+                  </button>
+                </div>
+                <!-- Custom entries list -->
+                <div id="custom-actions-list" style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3);"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3. SCENARIO PLANNER ──────────────────────────── -->
+      <section class="view-section" id="view-simulator">
+        <div class="simulator-grid">
+          <!-- Controls -->
+          <div class="card" style="display: flex; flex-direction: column; gap: var(--space-5);">
+            <div class="card-header" style="margin-bottom: 0;">
+              <span class="card-title">
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                What if I changed my habits?
+              </span>
+            </div>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: -10px; line-height: 1.5;">Move the sliders to see how small changes in your daily life could lower your impact. It updates as you drag!</p>
+
+            <div class="slider-stack">
+              <div class="slider-block">
+                <div class="slider-meta">
+                  <div class="slider-id">
+                    <div class="slider-icon-box">
+                      <svg viewBox="0 0 24 24"><path d="M5 17H3a2 2 0 01-2-2V5a2 2 0 012-2h11a2 2 0 012 2v3m-3 4l4-4 4 4M12 12v9"/></svg>
+                    </div>
+                    <div>
+                      <div class="slider-title">Drive Less</div>
+                       <div class="slider-subtitle">Walk, cycle, or combine errands</div>
+                    </div>
+                  </div>
+                  <span class="slider-badge" id="sim-driving-val">0%</span>
+                </div>
+                <input type="range" id="sim-driving-slider" min="0" max="100" value="0">
+              </div>
+
+              <div class="slider-block">
+                <div class="slider-meta">
+                  <div class="slider-id">
+                    <div class="slider-icon-box">
+                      <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <div>
+                      <div class="slider-title">Switch to Green Energy</div>
+                       <div class="slider-subtitle">Ask your provider for a green energy plan</div>
+                    </div>
+                  </div>
+                  <span class="slider-badge" id="sim-energy-val">20%</span>
+                </div>
+                <input type="range" id="sim-energy-slider" min="0" max="100" value="20">
+              </div>
+
+              <div class="slider-block">
+                <div class="slider-meta">
+                  <div class="slider-id">
+                    <div class="slider-icon-box">
+                      <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.67a1 1 0 00.93 1.46h12.5a1 1 0 00.95-1.31C17.5 18.42 16 16 16 12c0 0 2-1 2-4"/><path d="M7 4c4 0 8 2 8 2"/></svg>
+                    </div>
+                    <div>
+                      <div class="slider-title">Eat Less Meat</div>
+                       <div class="slider-subtitle">Try plant-based meals a few times a week</div>
+                    </div>
+                  </div>
+                  <span class="slider-badge" id="sim-food-val">0%</span>
+                </div>
+                <input type="range" id="sim-food-slider" min="0" max="100" value="0">
+              </div>
+
+              <div class="slider-block">
+                <div class="slider-meta">
+                  <div class="slider-id">
+                    <div class="slider-icon-box">
+                      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h11a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                    </div>
+                    <div>
+                      <div class="slider-title">Shop Less / Buy Secondhand</div>
+                       <div class="slider-subtitle">Choose quality or secondhand over buying new</div>
+                    </div>
+                  </div>
+                  <span class="slider-badge" id="sim-shopping-val">0%</span>
+                </div>
+                <input type="range" id="sim-shopping-slider" min="0" max="100" value="0">
+              </div>
+            </div>
+          </div>
+
+          <!-- Output -->
+          <div class="sim-output">
+            <div class="savings-hero">
+              <div class="savings-info">
+                <span class="savings-label">You could save each month</span>
+                <span class="savings-amount"><span id="sim-saved-co2">0</span> kg of carbon</span>
+                <span class="savings-note" id="sim-narrative-text">Adjust sliders to see impact.</span>
+              </div>
+              <div class="savings-pct-badge">
+                <span id="sim-saved-pct">0%</span>
+                <span>Less Carbon</span>
+              </div>
+            </div>
+
+            <div class="compare-chart">
+              <div class="card-header" style="margin-bottom: 0;">
+                <span class="card-title">
+                  <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                  Now vs. Future
+                </span>
+              </div>
+              <div class="compare-bars">
+                <div class="compare-bar-wrap">
+                  <div class="compare-bar bar-baseline" id="sim-bar-baseline" style="height: 70%;">
+                    <span class="bar-label-top" id="sim-bar-baseline-lbl">— kg</span>
+                  </div>
+                  <span class="bar-label-bottom">Current</span>
+                </div>
+                <div class="compare-bar-wrap">
+                  <div class="compare-bar bar-simulated" id="sim-bar-projected" style="height: 70%;">
+                    <span class="bar-label-top" id="sim-bar-projected-lbl">— kg</span>
+                  </div>
+                  <span class="bar-label-bottom">Future</span>
+                </div>
+              </div>
+              <div class="sim-narrative" id="sim-full-narrative">
+                Move the sliders above to see your future footprint.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 4. AI COACH ────────────────────────────────────── -->
+      <section class="view-section" id="view-coach">
+        <div class="coach-wrapper">
+          <div class="coach-header">
+            <div class="coach-id">
+              <div class="coach-avatar">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+              <div class="coach-info">
+                <span class="coach-name">Eco — Your Guide</span>
+                <span class="coach-status"><span class="status-dot"></span> Online</span>
+              </div>
+            </div>
+            <span class="tag tag-blue" style="font-size:11px;">AI</span>
+          </div>
+
+          <div class="coach-messages" id="coach-messages-log">
+            <div class="msg-bubble msg-coach">
+              <p>Hi! I'm Eco. How can I help you live greener today?</p>
+            </div>
+          </div>
+
+          <div class="coach-chips" id="coach-chips">
+            <span class="chip" data-prompt="Is my footprint good or bad?">How am I doing? 🤔</span>
+            <span class="chip" data-prompt="What is the easiest thing I can do to start?">Easy first steps 🌱</span>
+            <span class="chip" data-prompt="Why does eating beef affect the planet?">Why talk about meat? 🥩</span>
+            <span class="chip" data-prompt="Why should I compost?">Why compost? ♻️</span>
+            <span class="chip" data-prompt="How can I cut my energy bill and help the planet?">Save energy 💡</span>
+            <span class="chip" data-prompt="What are my transportation options?">Green travel 🚲</span>
+          </div>
+
+          <form class="coach-input" id="coach-chat-form" onsubmit="event.preventDefault();">
+            <input type="text" id="coach-user-msg-input" placeholder="Ask a question..." autocomplete="off" required>
+            <button type="submit" class="btn btn-primary" id="coach-send-btn">Ask</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── 5. GOALS & OFFSETS ─────────────────────────────── -->
+      <section class="view-section" id="view-rewards">
+        <div class="grid-2-1">
+          <!-- Left: Badges + Quests -->
+          <div style="display: flex; flex-direction: column; gap: var(--space-5);">
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                  My Badges 🏅
+                </span>
+                <span class="tag tag-navy" id="badge-count-tag">0 / 6 Earned</span>
+              </div>
+              <div class="badge-grid" id="badges-grid-el"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">
+                  <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                  My Challenges 🎯
+                </span>
+              </div>
+              <div class="quest-list" id="challenges-list-el"></div>
+            </div>
+          </div>
+
+          <!-- Right: Offsets -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">
+                <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.67a1 1 0 00.93 1.46h12.5a1 1 0 00.95-1.31C17.5 18.42 16 16 16 12c0 0 2-1 2-4"/><path d="M7 4c4 0 8 2 8 2"/></svg>
+                Support a Green Project 🌳
+              </span>
+            </div>
+            <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-4); line-height: 1.5;">These projects remove carbon from the air. Start with your habits, then help cancel out what's left.</p>
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);" id="offsets-list-el"></div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /content-frame -->
+  </main>
+</div><!-- /app-container -->
+
+<!-- ── Settings / Privacy Modal ──────────────────────────── -->
+<div id="settings-modal" style="display:none; position:fixed; inset:0; background:rgba(43,45,66,0.45); backdrop-filter:blur(6px); z-index:1000; align-items:center; justify-content:center;">
+  <div class="card" style="width:90%; max-width:500px; background: var(--bg-surface); box-shadow: var(--shadow-lg); border-color: var(--border);">
+    <div class="card-header" style="margin-bottom: var(--space-5);">
+      <span class="card-title">
+        <svg viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>
+        Settings
+      </span>
+      <button id="close-settings-btn" style="background:none;border:none;cursor:pointer;color:var(--text-muted);padding:4px;border-radius:4px;" title="Close">
+        <svg style="width:18px;height:18px;" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+      <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-5); line-height: 1.6; background: var(--bg-subtle); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+        🔒 Your data stays on your device only. We never send your information anywhere.
+      </p>
+
+    <div class="form-group" style="margin-bottom: var(--space-5);">
+      <label for="settings-region-select">Where do you live?</label>
+      <select id="settings-region-select">
+        <option value="IN">🇮🇳 India</option>
+        <option value="US">🇺🇸 United States</option>
+        <option value="GL">🌍 Somewhere else (global)</option>
+      </select>
+    </div>
+
+
+
+    <div style="margin-top: var(--space-6); display: flex; gap: var(--space-3);">
+      <button class="btn btn-secondary" id="export-data-btn" style="flex:1;">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export My Data
+      </button>
+      <button class="btn btn-danger" id="purge-data-btn" style="flex:1;">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+        Reset My Progress
+      </button>
+    </div>
+      <p style="font-size:10px; color:var(--text-muted); text-align:center; margin-top: var(--space-3);">
+        Your data rights are protected. You can download or delete everything at any time.
+      </p>
+  </div>
+</div>
+
+<!-- ── Story Export Modal ──────────────────────────────────── -->
+<div id="story-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.85); backdrop-filter:blur(8px); z-index:2000; align-items:center; justify-content:center; flex-direction:column; padding: 20px;">
+  
+  <div style="display:flex; justify-content:space-between; width: 100%; max-width: 360px; margin-bottom: 16px;">
+    <select id="story-month-select" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+      <option value="January">January</option>
+      <option value="February">February</option>
+      <option value="March">March</option>
+      <option value="April">April</option>
+      <option value="May">May</option>
+      <option value="June">June</option>
+      <option value="July">July</option>
+      <option value="August">August</option>
+      <option value="September">September</option>
+      <option value="October">October</option>
+      <option value="November">November</option>
+      <option value="December">December</option>
+    </select>
+    <button id="close-story-btn" style="background:none; border:none; color:white; cursor:pointer; padding: 4px;">
+      <svg style="width:24px;height:24px;" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div id="story-canvas" class="story-canvas-brutalist">
+    <div class="story-noise"></div>
+    <div class="story-content-top">
+      <div class="story-eyebrow">ECOLYTICS REPORT</div>
+      <div class="story-title" id="story-month-display">MY JUNE FOOTPRINT</div>
+      
+      <div class="story-quote-block">
+        <div class="story-huge-score">
+          <span id="story-score-val">338</span>
+          <span class="story-score-unit">kg CO₂</span>
+        </div>
+        <div class="story-quote-text" id="story-grade-val">"Excellent — Top 10% performance. Keep building the future."</div>
+      </div>
+    </div>
+    
+    <div class="story-graphic">
+      <div class="story-graphic-bg"></div>
+      <img src="img/forest_bg.png" class="story-graphic-img" alt="" />
+      
+      <div class="story-stats-overlay">
+        <div class="story-stat">
+          <span class="stat-lbl">TRANSPORT</span>
+          <span class="stat-bar"><div class="stat-fill" id="story-bar-transport"></div></span>
+        </div>
+        <div class="story-stat">
+          <span class="stat-lbl">ENERGY</span>
+          <span class="stat-bar"><div class="stat-fill" id="story-bar-energy"></div></span>
+        </div>
+        <div class="story-stat">
+          <span class="stat-lbl">FOOD</span>
+          <span class="stat-bar"><div class="stat-fill" id="story-bar-food"></div></span>
+        </div>
+        <div class="story-stat">
+          <span class="stat-lbl">SHOPPING</span>
+          <span class="stat-bar"><div class="stat-fill" id="story-bar-shopping"></div></span>
+        </div>
+        <div class="story-logo-stamp">
+          <svg viewBox="0 0 100 100" width="24" height="24"><path d="M65 28C38 34 32 55 27 65a3 3 0 002.7 4.3h36a3 3 0 002.8-3.8C66 62 62 54 62 42c0 0 6-3 6-12" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M36 22c12 0 24 6 24 6" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+          ECOLYTICS
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary" id="download-story-btn" style="width: 100%; max-width: 360px; margin-top: 24px; padding: 16px; background: white; color: black;">
+    <svg viewBox="0 0 24 24" style="stroke: black;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download for Instagram
+  </button>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/calculator.js"></script>
+<script src="js/gamification.js"></script>
+<script src="js/coach.js"></script>
+<script src="js/simulator.js"></script>
+<script src="js/storage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
